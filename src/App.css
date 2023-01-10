@@ -1,5 +1,18 @@
 .App {
-  text-align: center;
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  justify-content: center;
+  align-items: center;
+}
+
+.BigName {
+  font-size: 40pt;
+  color: white;
+  font-weight: bold;
 }
 
 .App-logo {
