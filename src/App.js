@@ -1,11 +1,12 @@
-import React, {useEffect, useState, useRef} from 'react';
+import React, { useState, useRef} from 'react';
 import axios from "axios";
 import NightCity from './assets/NightCity.jpg';
 import './App.css';
 
-const url = 'https://rhea-eclipse-server.herokuapp.com/posts'
+//const url = 'https://rhea-eclipse-server.herokuapp.com/posts'
+const url2 = 'http://localhost:5000/posts'
 
-export const fetchPosts = () => axios.get(url)
+export const fetchPosts = () => axios.get(url2)
 
 
 function App() {
@@ -16,7 +17,7 @@ function App() {
     const [connected, setConnected] = useState(false);
     const [username, setUsername] = useState('')
 
-    function connect() {
+   /* function connect() {
         socket.current = new WebSocket('ws://localhost:5000')
 
         socket.current.onopen = () => {
@@ -38,7 +39,7 @@ function App() {
         socket.current.onerror = () => {
             console.log('Socket произошла ошибка')
         }
-    }
+    }*/
 
     const sendMessage = async () => {
         const message = {
@@ -53,7 +54,10 @@ function App() {
 
     const conPost = async () => {
 
+        console.log("PIZDA")
+
         const posts = await fetchPosts()
+
         console.log("BLIA : ", posts.data)
 
     }
@@ -68,7 +72,7 @@ function App() {
                         onChange={e => setUsername(e.target.value)}
                         type="text"
                         placeholder="Введите ваше имя"/>
-                    <button onClick={connect}>Войти</button>
+                    {/*<button onClick={connect}>Войти</button>*/}
                     <button onClick={conPost}>XXXXXX</button>
                 </div>
             </div>
