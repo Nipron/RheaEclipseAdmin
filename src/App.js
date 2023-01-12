@@ -7,6 +7,7 @@ import './App.css';
 const url2 = 'http://localhost:5000/posts'
 
 export const fetchPosts = () => axios.get(url2)
+export const createPost = data => axios.post(url2, data)
 
 
 function App() {
@@ -62,6 +63,14 @@ function App() {
 
     }
 
+    const createV = async () => {
+
+        let bb = await createPost({creator: "LL", title: "XXX", message: "j"})
+
+        console.log(bb)
+
+    }
+
 
     if (!connected) {
         return (
@@ -74,6 +83,7 @@ function App() {
                         placeholder="Введите ваше имя"/>
                     {/*<button onClick={connect}>Войти</button>*/}
                     <button onClick={conPost}>XXXXXX</button>
+                    <button onClick={createV}>CREATE</button>
                 </div>
             </div>
         )
