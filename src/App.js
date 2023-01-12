@@ -18,6 +18,8 @@ function App() {
     const [connected, setConnected] = useState(false);
     const [username, setUsername] = useState('')
 
+    const b = 5;
+
    /* function connect() {
         socket.current = new WebSocket('ws://localhost:5000')
 
