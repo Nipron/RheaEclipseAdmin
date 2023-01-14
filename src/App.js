@@ -3,11 +3,11 @@ import axios from "axios";
 import NightCity from './assets/NightCity.jpg';
 import './App.css';
 
-const url = 'https://rhea-eclipse-server.herokuapp.com/posts'
-const url2 = 'http://localhost:5000/posts'
+//const url = 'https://rhea-eclipse-server.herokuapp.com/posts'
+const url2 = 'http://localhost:5000'
 
-export const fetchPosts = () => axios.get(url)
-export const createPost = data => axios.post(url, data)
+export const fetchPosts = () => axios.get(url2)
+export const createPost = data => axios.post(url2, data)
 
 
 function App() {
@@ -20,17 +20,22 @@ function App() {
 
     const b = 5;
 
-   /* function connect() {
-        socket.current = new WebSocket('ws://localhost:5000')
+    function connect() {
+
+        console.log("AAA")
+        //socket.current = new WebSocket('ws://localhost:5000')
+        socket.current = new WebSocket('https://rhea-eclipse-socket.herokuapp.com/')
+
+        console.log("BBB")
 
         socket.current.onopen = () => {
             setConnected(true)
-            const message = {
+          /*  const message = {
                 event: 'connection',
                 username,
                 id: Date.now()
             }
-            socket.current.send(JSON.stringify(message))
+            socket.current.send(JSON.stringify(message))*/
         }
         socket.current.onmessage = (event) => {
             const message = JSON.parse(event.data)
@@ -42,7 +47,7 @@ function App() {
         socket.current.onerror = () => {
             console.log('Socket произошла ошибка')
         }
-    }*/
+    }
 
     const sendMessage = async () => {
         const message = {
@@ -55,22 +60,43 @@ function App() {
         setValue('')
     }
 
+    const sendZZZ = async () => {
+
+        console.log("HTHT")
+
+      /*  title: String,
+            message: String,
+            creator: String,
+            tags: [String],
+            selectedFile: String,
+            likeCount: {
+            type: Number,
+        default: 0,
+        },
+        createdAt: {
+            type: Date,
+        default: new Date(),
+        },*/
+
+        const message = {
+            username,
+            message: value,
+            id: Date.now(),
+            event: 'zzz'
+        }
+        socket.current.send(JSON.stringify(message));
+        setValue('')
+    }
+
     const conPost = async () => {
-
         console.log("PIZDA")
-
         const posts = await fetchPosts()
-
         console.log("BLIA : ", posts.data)
-
     }
 
     const createV = async () => {
-
         let bb = await createPost({creator: "LL", title: "XXX", message: "j"})
-
         console.log(bb)
-
     }
 
 
@@ -83,7 +109,7 @@ function App() {
                         onChange={e => setUsername(e.target.value)}
                         type="text"
                         placeholder="Введите ваше имя"/>
-                    {/*<button onClick={connect}>Войти</button>*/}
+                    <button onClick={connect}>Войти</button>
                     <button onClick={conPost}>XXXXXX</button>
                     <button onClick={createV}>CREATE</button>
                 </div>
@@ -97,6 +123,7 @@ function App() {
             <div className="form">
                 <input value={value} onChange={e => setValue(e.target.value)} type="text"/>
                 <button onClick={sendMessage}>Отправить</button>
+                <button onClick={sendZZZ}>sendZZZ</button>
             </div>
             <div className="messages">
                 {messages.map(mess =>
