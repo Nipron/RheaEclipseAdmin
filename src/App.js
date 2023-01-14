@@ -24,7 +24,7 @@ function App() {
 
         console.log("AAA")
         //socket.current = new WebSocket('ws://localhost:5000')
-        socket.current = new WebSocket('ws://rhea-eclipse-socket.herokuapp.com/')
+        socket.current = new WebSocket('wss://rhea-eclipse-socket.herokuapp.com/')
 
         console.log("BBB")
 
@@ -85,6 +85,7 @@ function App() {
             event: 'zzz'
         }
         socket.current.send(JSON.stringify(message));
+        console.log("Sent ")
         setValue('')
     }
 
