@@ -3,11 +3,11 @@ import axios from "axios";
 import NightCity from './assets/NightCity.jpg';
 import './App.css';
 
-//const url = 'https://rhea-eclipse-server.herokuapp.com/posts'
-const url2 = 'http://localhost:5000'
+const url = 'https://rhea-eclipse-server.herokuapp.com/posts'
+//const url2 = 'http://localhost:5000'
 
-export const fetchPosts = () => axios.get(url2)
-export const createPost = data => axios.post(url2, data)
+export const fetchPosts = () => axios.get(url)
+export const createPost = data => axios.post(url, data)
 
 
 function App() {
@@ -24,7 +24,7 @@ function App() {
 
         console.log("AAA")
         //socket.current = new WebSocket('ws://localhost:5000')
-        socket.current = new WebSocket('https://rhea-eclipse-socket.herokuapp.com/')
+        socket.current = new WebSocket('ws://rhea-eclipse-socket.herokuapp.com/')
 
         console.log("BBB")
 
