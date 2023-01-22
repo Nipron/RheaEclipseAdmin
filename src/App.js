@@ -3,11 +3,14 @@ import axios from "axios";
 import NightCity from './assets/NightCity.jpg';
 import './App.css';
 
-const url = 'https://rhea-eclipse-server.herokuapp.com/posts'
-//const url2 = 'http://localhost:5000'
+const url = 'https://rhea-eclipse-server.herokuapp.com'
+const url2 = 'http://localhost:5000'
 
 export const fetchPosts = () => axios.get(url)
 export const createPost = data => axios.post(url, data)
+
+export const bigRegister = data => {console.log(data); return axios.post(`${url}/auth/register`, data)}
+export const bigRegister2 = data => axios.get(`${url}/auth`)
 
 
 function App() {
@@ -17,6 +20,7 @@ function App() {
     const socket = useRef()
     const [connected, setConnected] = useState(false);
     const [username, setUsername] = useState('')
+    const [password, setPassword] = useState('')
 
     const b = 5;
 
@@ -100,6 +104,15 @@ function App() {
         console.log(bb)
     }
 
+    const login = async () => {
+
+    }
+
+    const register = async () => {
+        const response = await bigRegister({email: username, password})
+        console.log("RESP from server: ", response)
+    }
+
 
     if (!connected) {
         return (
@@ -110,9 +123,13 @@ function App() {
                         onChange={e => setUsername(e.target.value)}
                         type="text"
                         placeholder="Введите ваше имя"/>
-                    <button onClick={connect}>Войти</button>
-                    <button onClick={conPost}>XXXXXX</button>
-                    <button onClick={createV}>CREATE</button>
+                    <input
+                        value={password}
+                        onChange={e => setPassword(e.target.value)}
+                        type="text"
+                        placeholder="Введите пароль"/>
+                    <button onClick={login}>Login</button>
+                    <button onClick={register}>Register</button>
                 </div>
             </div>
         )
