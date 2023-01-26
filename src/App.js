@@ -1,15 +1,27 @@
-import React, { useState, useRef} from 'react';
+import React, {useState, useRef} from 'react';
 import axios from "axios";
 import NightCity from './assets/NightCity.jpg';
 import './App.css';
+import {io} from "socket.io-client";
 
 const url = 'https://rhea-eclipse-server.herokuapp.com'
+const urlSocket = 'https://rhea-eclipse-socket.herokuapp.com'
 const url2 = 'http://localhost:5000'
+
+const handleInit = msg => {
+    console.log(msg)
+}
+
+const socket = io(urlSocket)
+socket.on('init', handleInit)
 
 export const fetchPosts = () => axios.get(url)
 export const createPost = data => axios.post(url, data)
 
-export const bigRegister = data => {console.log(data); return axios.post(`${url}/auth/register`, data)}
+export const bigRegister = data => {
+    console.log(data);
+    return axios.post(`${url}/auth/register`, data)
+}
 export const bigRegister2 = data => axios.get(`${url}/auth`)
 
 
@@ -17,7 +29,7 @@ function App() {
 
     const [messages, setMessages] = useState([]);
     const [value, setValue] = useState('');
-    const socket = useRef()
+   // const socket = useRef()
     const [connected, setConnected] = useState(false);
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
@@ -34,18 +46,18 @@ function App() {
 
         socket.current.onopen = () => {
             setConnected(true)
-          /*  const message = {
-                event: 'connection',
-                username,
-                id: Date.now()
-            }
-            socket.current.send(JSON.stringify(message))*/
+            /*  const message = {
+                  event: 'connection',
+                  username,
+                  id: Date.now()
+              }
+              socket.current.send(JSON.stringify(message))*/
         }
         socket.current.onmessage = (event) => {
             const message = JSON.parse(event.data)
             setMessages(prev => [message, ...prev])
         }
-        socket.current.onclose= () => {
+        socket.current.onclose = () => {
             console.log('Socket закрыт')
         }
         socket.current.onerror = () => {
@@ -68,19 +80,19 @@ function App() {
 
         console.log("HTHT")
 
-      /*  title: String,
-            message: String,
-            creator: String,
-            tags: [String],
-            selectedFile: String,
-            likeCount: {
-            type: Number,
-        default: 0,
-        },
-        createdAt: {
-            type: Date,
-        default: new Date(),
-        },*/
+        /*  title: String,
+              message: String,
+              creator: String,
+              tags: [String],
+              selectedFile: String,
+              likeCount: {
+              type: Number,
+          default: 0,
+          },
+          createdAt: {
+              type: Date,
+          default: new Date(),
+          },*/
 
         const message = {
             username,
@@ -113,6 +125,11 @@ function App() {
         console.log("RESP from server: ", response)
     }
 
+    const connectIO = () => {
+        console.log("GG")
+        socket.emit('kuku', 'epta')
+    }
+
 
     if (!connected) {
         return (
@@ -130,6 +147,7 @@ function App() {
                         placeholder="Введите пароль"/>
                     <button onClick={login}>Login</button>
                     <button onClick={register}>Register</button>
+                    <button onClick={connectIO}>ConnetcIO</button>
                 </div>
             </div>
         )
